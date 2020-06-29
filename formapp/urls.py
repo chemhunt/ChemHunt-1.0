@@ -1,6 +1,6 @@
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url
-from formapp.views import login,auth_view,que1,que2,que3,ans1,ans2,ans3,thanks,logout_request
+from formapp.views import login,auth_view,que1,que2,que3,ans1,ans2,ans3,thanks,logout_request,export_xls,bulk_add_users
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
@@ -14,5 +14,7 @@ urlpatterns = [
     url(r'^que3/$', que3),
     url(r'^ans3/$', ans3),
     url(r'^thanks/$', thanks),
-    url(r'^logout/$', logout_request)
+    url(r'^logout/$', logout_request),
+    url(r'^xls/$', export_xls, name='export_xls'),
+    url(r'^read_data/$', bulk_add_users),
 ]

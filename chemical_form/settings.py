@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'i%&2mze@_5xot=4di_ovdb-ygk4@m_m%z9zm58z-h1$2ny#n-h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['chemicalexam.herokuapp.com']
 
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'formapp'
+    'formapp',
+    'import_export'
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chemical_form.wsgi.application'
 
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

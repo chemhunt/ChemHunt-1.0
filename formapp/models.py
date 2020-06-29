@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 
 class Question(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    username =  models.CharField(max_length=30,blank=True,null=True)
     Question1 = models.CharField(max_length=30,blank=True,null=True)
     Question2 = models.CharField(max_length=30,blank=True,null=True)
     Question3 = models.CharField(max_length=30,blank=True,null=True)

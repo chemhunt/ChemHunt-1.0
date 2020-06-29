@@ -3,10 +3,13 @@ from django.contrib import auth
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from formapp.models import Question
+from csv import reader
+
+import xlwt
 
 # Create your views here.
 def login(request):
@@ -18,14 +21,13 @@ def login(request):
 def auth_view(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
-    request.session['password']=password
-    
     user = auth.authenticate(username=username,password=password)
-    if user is not None:
-        
+    if user is not None:        
         auth.login(request, user)
-        return HttpResponseRedirect('/que1')
+        return HttpResponseRedirect('/que1')    
     else:
+        print("username",username)
+        print("password",password)        
         messages.add_message(request,messages.WARNING,'Invalid Login Details')
         return render(request,'login.html')
 
@@ -42,25 +44,26 @@ def que3(request):
     return render(request,'que3.html')
 
 def ans1(request):
-    u = User.objects.get(id = request.user.id)
+    u = User.objects.get(username = request.user.username)
     que=Question()
     que.user=u
+    que.username = request.user.username
     que.Question1=request.POST['answer1']   
-    # que.save()
+    que.save()
     return redirect('/que2')
 
 def ans2(request):
-    u = User.objects.get(id = request.user.id)
-    que=Question.objects.get(user=u)    
+    u = User.objects.get(username = request.user.username)
+    que=Question.objects.get(user=u)        
     que.Question2=request.POST['answer2']
-    # que.save()
+    que.save()
     return redirect('/que3')
 
 def ans3(request):
-    u = User.objects.get(id = request.user.id)
-    que=Question.objects.get(user=u)    
+    u = User.objects.get(username = request.user.username)
+    que=Question.objects.get(user=u)        
     que.Question3=request.POST['answer3']
-    # que.save()
+    que.save()
     return redirect('/thanks')
 
 def thanks(request):
@@ -69,3 +72,49 @@ def thanks(request):
 def logout_request(request):
     logout(request)
     return redirect('/login')
+
+def export_xls(request):
+    if((request.GET['uname'] == "sdm") and (request.GET['pass'] == "sdm123")):        
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="answer.xls"'
+
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Answers')
+        # Sheet header, first row
+        row_num = 0
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+        columns = ['Username', 'Answer1', 'Answer2', 'Answer3', ]
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+        # Sheet body, remaining rows
+
+        font_style = xlwt.XFStyle()
+
+        rows = Question.objects.all().values_list('username', 'Question1', 'Question2', 'Question3')
+        for row in rows:
+            row_num += 1
+            for col_num in range(len(row)):
+                ws.write(row_num, col_num, row[col_num], font_style)
+        wb.save(response)
+        return response
+
+def bulk_add_users(request):
+    if((request.GET['uname'] == "sdm") and (request.GET['pass'] == "sdm123")): 
+        with open('E:\\chemical_form\\IICHE_ID.csv', mode='r') as csv_file:
+            csv_reader = reader(csv_file)
+            line_count = 0
+            for line in csv_reader:
+                if(line_count != 0):
+                    id = line[0]
+                    username = line[1]
+                    password = line[2]
+                    if not (id and
+                            username and
+                            password):
+                        raise ValueError(f'Invalid User data!')
+                    user = User(id=id, username=username)
+                    user.set_password(password)
+                    user.save()
+                line_count+=1
