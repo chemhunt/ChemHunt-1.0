@@ -79,3 +79,8 @@ textarea {
 {
     text-align: center;
 }
+@media(max-width:550px){
+    .login-box{
+        width: 350px
+    }
+}
