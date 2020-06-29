@@ -80,12 +80,18 @@ textarea {
     text-align: center;
 }
 @media(max-width:550px){
-    .login-box{
+    .content{
         width: 400px
+    }
+    textarea{
+        width: 340px;
     }
 }
 @media(max-width:400px){
-    .login-box{
+    .content{
         width: 300px
+    }
+    textarea{
+        width: 250px;
     }
 }
