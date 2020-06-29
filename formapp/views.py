@@ -46,21 +46,21 @@ def ans1(request):
     que=Question()
     que.user=u
     que.Question1=request.POST['answer1']   
-    que.save()
+    # que.save()
     return redirect('/que2')
 
 def ans2(request):
     u = User.objects.get(id = request.user.id)
     que=Question.objects.get(user=u)    
     que.Question2=request.POST['answer2']
-    que.save()
+    # que.save()
     return redirect('/que3')
 
 def ans3(request):
     u = User.objects.get(id = request.user.id)
     que=Question.objects.get(user=u)    
     que.Question3=request.POST['answer3']
-    que.save()
+    # que.save()
     return redirect('/thanks')
 
 def thanks(request):
