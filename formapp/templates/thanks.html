@@ -4,17 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Thanks</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
 </head>
 <body>
-    <div class="content">
-        <div class="content-center">
+    <div class="content-thank">
+        {% if messages %}
+            <div class="message">
+            {% for message in messages %}
+                {% if message.level == 25 %}
+                    <div class="success">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
         <h1>Thank You...</h1>
             <form action="/logout/">
                 {% csrf_token %}
                 <input type="submit" name="ans1btn" value="Logout"/>
-            </form>        
-        </div>
+            </form>                
     </div>
 </body>

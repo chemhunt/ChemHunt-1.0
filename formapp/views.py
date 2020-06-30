@@ -24,49 +24,61 @@ def auth_view(request):
     user = auth.authenticate(username=username,password=password)
     if user is not None:        
         auth.login(request, user)
-        return HttpResponseRedirect('/que1')    
+        return HttpResponseRedirect('/que')    
     else:
         print("username",username)
         print("password",password)        
         messages.add_message(request,messages.WARNING,'Invalid Login Details')
         return render(request,'login.html')
 
-@login_required(login_url='/login')
-def que1(request):
-    return render(request,'que1.html')
+# @login_required(login_url='/login')
+# def que1(request):
+#     return render(request,'que1.html')
+
+# @login_required(login_url='/login')
+# def que2(request):
+#     return render(request,'que2.html')
 
 @login_required(login_url='/login')
-def que2(request):
-    return render(request,'que2.html')
+def que(request):
+    u = User.objects.get(username = request.user.username)
+    try:
+        que = Question.objects.get(user = u)
+        if que is not None:
+            messages.add_message(request,messages.SUCCESS,'You have already submited answer...')
+            return render(request,'thanks.html')
+        else:
+            return render(request,'que.html')
+    except:    
+        return render(request,'que.html')
 
-@login_required(login_url='/login')
-def que3(request):
-    return render(request,'que3.html')
+# def ans1(request):
+#     u = User.objects.get(username = request.user.username)
+    
+#     que.Question1=request.POST['answer1']   
+#     que.save()
+#     return redirect('/que2')
 
-def ans1(request):
+# def ans2(request):
+#     u = User.objects.get(username = request.user.username)
+#     que=Question.objects.get(user=u)        
+#     que.Question2=request.POST['answer2']
+#     que.save()
+#     return redirect('/que3')
+
+def ans(request):
     u = User.objects.get(username = request.user.username)
     que=Question()
     que.user=u
     que.username = request.user.username
-    que.Question1=request.POST['answer1']   
-    que.save()
-    return redirect('/que2')
-
-def ans2(request):
-    u = User.objects.get(username = request.user.username)
-    que=Question.objects.get(user=u)        
+    que.Question1=request.POST['answer1']
     que.Question2=request.POST['answer2']
-    que.save()
-    return redirect('/que3')
-
-def ans3(request):
-    u = User.objects.get(username = request.user.username)
-    que=Question.objects.get(user=u)        
     que.Question3=request.POST['answer3']
     que.save()
     return redirect('/thanks')
 
 def thanks(request):
+    messages.add_message(request,messages.SUCCESS,'Your answer submited successfully...')
     return render(request,'thanks.html')
 
 def logout_request(request):

@@ -4,18 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question1</title>
+    <title>Question</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
 </head>
 <body>
     <div class="content">        
-        <form action="/ans1/" method="POST">
+        <form action="/ans/" method="POST">
             {% csrf_token %}
             <h3>Question1 :</h3>What is your hoby..??
-            <br>
             <textarea name="answer1" placeholder="Enter your answer here.."></textarea>
             <br>
-            <input type="submit" name="ans1btn" value="NEXT"/>
+            <h3>Question2 :</h3>What is your favourite game..??
+            <textarea name="answer2" placeholder="Enter your answer here.."></textarea>
+            <br>
+            <h3>Question3 :</h3>What is your future plan..??
+            <textarea name="answer3" placeholder="Enter your answer here.."></textarea>
+            <br>
+            <input type="submit" name="ans1btn" value="SUBMIT"/>
         </form>
     </div>
 </body>
