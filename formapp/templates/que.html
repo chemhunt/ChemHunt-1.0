@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Question</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/timer.js' %}"></script>
 </head>
 <body>
     <div class="content">        
+        <div class="timer">
+            <div id="time">2:00</div>
+        </div>
         <form action="/ans/" method="POST">
             {% csrf_token %}
             <h3>Question1 :</h3>What is your hoby..??
@@ -20,7 +24,14 @@
             <h3>Question3 :</h3>What is your future plan..??
             <textarea name="answer3" placeholder="Enter your answer here.."></textarea>
             <br>
-            <input type="submit" name="ans1btn" value="SUBMIT"/>
+            <input type="submit" name="ansbtn" id="ansbtn" value="SUBMIT"/>
         </form>
     </div>
+    <script type="text/javascript">      
+        window.onbeforeunload = function(event) {
+            return confirm("Confirm refresh");
+        }; 
+        loadtimer();
+    </script>
 </body>
+</html>

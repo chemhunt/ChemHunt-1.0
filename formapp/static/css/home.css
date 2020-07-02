@@ -3,7 +3,11 @@ body{
     background: #f5f5f5;
     font-family:  sans-serif;
 }
-
+.timer{
+    font-size: 26px;
+    padding-top: 20px;
+    color: green;
+}
 .content{    
     width: 500px;
     position: absolute;

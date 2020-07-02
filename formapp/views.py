@@ -114,19 +114,18 @@ def export_xls(request):
 
 def bulk_add_users(request):
     if((request.GET['uname'] == "sdm") and (request.GET['pass'] == "sdm123")): 
-        with open('E:\\chemical_form\\IICHE_ID.csv', mode='r') as csv_file:
+        with open('E:\\chemical_form\\data.csv', mode='r') as csv_file:
             csv_reader = reader(csv_file)
             line_count = 0
             for line in csv_reader:
                 if(line_count != 0):
-                    id = line[0]
-                    username = line[1]
-                    password = line[2]
-                    if not (id and
-                            username and
+                    # id = line[0]
+                    username = line[0]
+                    password = line[1]
+                    if not (username and
                             password):
                         raise ValueError(f'Invalid User data!')
-                    user = User(id=id, username=username)
+                    user = User(username=username)
                     user.set_password(password)
                     user.save()
                 line_count+=1
