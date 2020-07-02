@@ -11,7 +11,7 @@
 <body>
     <div class="content">        
         <div class="timer">
-            <div id="time">2:00</div>
+            <div id="time">5:00</div>
         </div>
         <form action="/ans/" method="POST">
             {% csrf_token %}
@@ -27,10 +27,7 @@
             <input type="submit" name="ansbtn" id="ansbtn" value="SUBMIT"/>
         </form>
     </div>
-    <script type="text/javascript">      
-        window.onbeforeunload = function(event) {
-            return confirm("Confirm refresh");
-        }; 
+    <script type="text/javascript">  
         loadtimer();
     </script>
 </body>
