@@ -114,7 +114,7 @@ def export_xls(request):
 
 def bulk_add_users(request):
     if((request.GET['uname'] == "sdm") and (request.GET['pass'] == "sdm123")): 
-        with open('E:\\chemical_form\\data.csv', mode='r') as csv_file:
+        with open('E:\\chemical_form\\day2.csv', mode='r') as csv_file:
             csv_reader = reader(csv_file)
             line_count = 0
             for line in csv_reader:
