@@ -74,6 +74,7 @@ def ans(request):
     que.Question1=request.POST['answer1']
     que.Question2=request.POST['answer2']
     que.Question3=request.POST['answer3']
+    que.Question4=request.POST['answer4']
     que.save()
     return redirect('/thanks')
 

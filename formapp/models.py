@@ -10,6 +10,7 @@ class Question(models.Model):
     Question1 = models.CharField(max_length=30,blank=True,null=True)
     Question2 = models.CharField(max_length=30,blank=True,null=True)
     Question3 = models.CharField(max_length=30,blank=True,null=True)
+    Question4 = models.CharField(max_length=30,blank=True,null=True)
 
     def __str__(self):
         return f'{self.user} question' 

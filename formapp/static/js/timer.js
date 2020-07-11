@@ -1,4 +1,4 @@
-var min = 5;
+var min = 60;
 var sec = 0;
 function loadtimer() {
     if(localStorage.getItem("min") && localStorage.getItem("sec")) {
@@ -6,7 +6,7 @@ function loadtimer() {
         sec = localStorage.getItem("sec");
     }
     else {
-        min = 5;
+        min = 60;
         sec = 0;
         localStorage.setItem("min", min);
         localStorage.setItem("sec",sec);
