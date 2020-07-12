@@ -71,6 +71,7 @@ def ans(request):
     que=Question()
     que.user=u
     que.username = request.user.username
+    que.name = request.user.first_name
     que.Question1=request.POST['answer1']
     que.Question2=request.POST['answer2']
     que.Question3=request.POST['answer3']
@@ -97,7 +98,7 @@ def export_xls(request):
         row_num = 0
         font_style = xlwt.XFStyle()
         font_style.font.bold = True
-        columns = ['Username', 'Answer1', 'Answer2', 'Answer3', 'Answer4', ]
+        columns = ['Name','UserID', 'Answer1', 'Answer2', 'Answer3', 'Answer4', ]
 
         for col_num in range(len(columns)):
             ws.write(row_num, col_num, columns[col_num], font_style)
@@ -105,7 +106,7 @@ def export_xls(request):
 
         font_style = xlwt.XFStyle()
 
-        rows = Question.objects.all().values_list('username', 'Question1', 'Question2', 'Question3','Question4')
+        rows = Question.objects.all().values_list('name','username', 'Question1', 'Question2', 'Question3','Question4')
         for row in rows:
             row_num += 1
             for col_num in range(len(row)):
@@ -115,18 +116,20 @@ def export_xls(request):
 
 def bulk_add_users(request):
     if((request.GET['uname'] == "sdm") and (request.GET['pass'] == "sdm123")): 
-        with open('E:\\chemical_form\\day2.csv', mode='r') as csv_file:
+        with open('E:\\chemical_form\\day1.csv', mode='r') as csv_file:
             csv_reader = reader(csv_file)
             line_count = 0
             for line in csv_reader:
                 if(line_count != 0):
                     # id = line[0]
-                    username = line[0]
-                    password = line[1]
+                    name = line[0]
+                    username = line[1]
+                    password = line[2]
                     if not (username and
                             password):
                         raise ValueError(f'Invalid User data!')
                     user = User(username=username)
+                    user.first_name = name
                     user.set_password(password)
                     user.save()
                 line_count+=1
