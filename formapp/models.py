@@ -8,6 +8,7 @@ class Question(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     username =  models.CharField(max_length=100,blank=True,null=True)
     name = models.CharField(max_length=100,blank=True,null=True)
+    time = models.DateTimeField(default=timezone.now)
     Question1 = models.CharField(max_length=300000,blank=True,null=True)
     Question2 = models.CharField(max_length=300000,blank=True,null=True)
     Question3 = models.CharField(max_length=300000,blank=True,null=True)

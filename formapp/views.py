@@ -98,19 +98,22 @@ def export_xls(request):
         row_num = 0
         font_style = xlwt.XFStyle()
         font_style.font.bold = True
-        columns = ['Name','UserID', 'Answer1', 'Answer2', 'Answer3', 'Answer4', ]
+        columns = ['Name','UserID', 'Answer1', 'Answer2', 'Answer3', 'Answer4', 'Time']
 
         for col_num in range(len(columns)):
             ws.write(row_num, col_num, columns[col_num], font_style)
         # Sheet body, remaining rows
 
         font_style = xlwt.XFStyle()
-
+        times = Question.objects.all().values_list('time',flat=True)
+        # time = now.strftime('%H:%M:%S')
         rows = Question.objects.all().values_list('name','username', 'Question1', 'Question2', 'Question3','Question4')
-        for row in rows:
+
+        for (row,time) in zip(rows, times):
             row_num += 1
             for col_num in range(len(row)):
                 ws.write(row_num, col_num, row[col_num], font_style)
+            ws.write(row_num, 6, time.strftime('%H:%M:%S'), font_style)            
         wb.save(response)
         return response
 
