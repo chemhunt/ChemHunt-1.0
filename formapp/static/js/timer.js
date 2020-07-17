@@ -1,15 +1,15 @@
 var min = 60;
 var sec = 0;
 function loadtimer() {
-    if(localStorage.getItem("min5") && localStorage.getItem("sec5")) {
-        min = localStorage.getItem("min5");
-        sec = localStorage.getItem("sec5");
+    if(localStorage.getItem("min6") && localStorage.getItem("sec6")) {
+        min = localStorage.getItem("min6");
+        sec = localStorage.getItem("sec6");
     }
     else {
         min = 60;
         sec = 0;
-        localStorage.setItem("min5", min);
-        localStorage.setItem("sec5",sec);
+        localStorage.setItem("min6", min);
+        localStorage.setItem("sec6",sec);
     }
     timer();
 }
@@ -17,13 +17,13 @@ function timer() {
 
     if(sec!=0) {
         sec--;
-        localStorage.setItem("sec5",sec);
+        localStorage.setItem("sec6",sec);
     }
     else {
         sec=59;
         min--;  
-        localStorage.setItem("min5", min);  
-        localStorage.setItem("sec5",sec);
+        localStorage.setItem("min6", min);  
+        localStorage.setItem("sec6",sec);
     }
     document.getElementById("time").innerHTML = min + ":" + (sec<10?("0"+sec):sec);
     if(sec==0 && min==0) {
